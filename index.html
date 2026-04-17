@@ -825,7 +825,7 @@ function procesarVenta(cli){
   document.getElementById("vueltoBox").classList.remove("show");
   document.getElementById("vueltoInput").value="";
   renderCart();renderProds();
-  toast("Venta registrada — "+fmt(total),"ok");
+  toast("Venta registrada - "+fmt(total),"ok");
 }
 
 // ── TICKET ──
@@ -839,13 +839,13 @@ function showTicket(v){
   var cuotaStr=v.pago==="credito"&&v.cuotas>1?" ("+v.cuotas+" cuotas)":"";
   var descLine=v.descPct>0?"<div style='display:flex;justify-content:space-between;color:#c00'><span>Descuento ("+v.descPct+"%)</span><span>-"+fmt(v.descAmt)+"</span></div>":"";
   var cli=v.cliente;
-  var tipoLine=cli&&cli.tipo?"<div style='text-align:center;font-weight:700;margin:4px 0'>FACTURA "+(cli.tipo==="A"?"A — Resp. Inscripto":"B — Consumidor Final")+"</div>":"";
+  var tipoLine=cli&&cli.tipo?"<div style='text-align:center;font-weight:700;margin:4px 0'>FACTURA "+(cli.tipo==="A"?"A - Resp. Inscripto":"B - Consumidor Final")+"</div>":"";
   var cliLine="";
   if(cli&&cli.tipo==="A")cliLine="<div class='tLine'></div><div><b>"+cli.nombre+"</b></div><div>CUIT: "+cli.cuit+"</div>"+(cli.dom?"<div>"+cli.dom+"</div>":"");
   else if(cli&&cli.tipo==="B"&&(cli.nombre||cli.email))cliLine="<div class='tLine'></div><div style='color:#555'>Cliente: "+cli.nombre+(cli.email?" · "+cli.email:"")+(cli.tel?" · "+cli.tel:"")+"</div>";
   document.getElementById("ticketContent").innerHTML=
     "<div class='ticketBox'><h4>"+(cfg.razon||"ACCES Accesorios")+"</h4>"+tipoLine+
-    "<div class='tCtr'>"+(cfg.dom||"Alto Comahue Shopping")+"<br>CUIT: "+(cfg.cuit||"—")+" · "+(cfg.iva||"Resp. Inscripto")+"<br>IIBB: "+(cfg.ib||"—")+" · PV: "+(cfg.pv||"0001")+"</div>"+
+    "<div class='tCtr'>"+(cfg.dom||"Alto Comahue Shopping")+"<br>CUIT: "+(cfg.cuit||"-")+" · "+(cfg.iva||"Resp. Inscripto")+"<br>IIBB: "+(cfg.ib||"-")+" · PV: "+(cfg.pv||"0001")+"</div>"+
     "<div class='tLine'></div><div style='display:flex;justify-content:space-between'><span>"+fStr+"</span><span>"+sName+"</span></div>"+
     "<div>Vendedor: "+v.vendedor+"</div>"+cliLine+
     "<div class='tLine'></div><table><tr class='tBold'><td>Producto</td><td class='tRight'>Qty</td><td class='tRight'>Total</td></tr>"+rows+"</table>"+
@@ -1107,7 +1107,7 @@ document.getElementById(“clientesCount”).textContent=clientes.length+” cli
 var tb=document.getElementById(“clientesTable”);
 if(!clientes.length){tb.innerHTML=”<tr><td colspan='3' style='text-align:center;padding:30px;color:var(--txt2)'>Sin clientes aún</td></tr>”;return;}
 var html=””;
-for(var i=0;i<clientes.length;i++){var c=clientes[i];var ult=c.ultimaCompra?new Date(c.ultimaCompra).toLocaleDateString(“es-AR”):”—”;
+for(var i=0;i<clientes.length;i++){var c=clientes[i];var ult=c.ultimaCompra?new Date(c.ultimaCompra).toLocaleDateString(“es-AR”):”-”;
 html+=”<tr><td><div style='font-weight:600;font-size:.82rem'>”+(c.nombre||“Sin nombre”)+”</div>”+(c.email?”<div style='font-size:.72rem;color:var(--txt2)'>”+c.email+”</div>”:””)+(c.tel?”<div style='font-size:.72rem;color:var(--txt2)'>📱 “+c.tel+”</div>”:””)+”<div style='font-size:.68rem;color:var(--txt3)'>Última: “+ult+”</div></td><td style='text-align:center;font-weight:700'>”+c.compras+”</td><td style='font-weight:700;color:var(--acc)'>”+fmt(c.totalGastado||0)+”</td></tr>”;
 }
 tb.innerHTML=html;
@@ -1134,7 +1134,7 @@ var blob=new Blob([data],{type:“application/json”});var a=document.createEle
 document.getElementById(“fileImport”).addEventListener(“change”,function(e){
 var file=e.target.files[0];if(!file)return;
 var reader=new FileReader();
-reader.onload=function(ev){try{var data=JSON.parse(ev.target.result);if(data.prods)dbSet(“prods”,data.prods);if(data.ventas)dbSet(“ventas”,data.ventas);if(data.cfg)dbSet(“cfg”,data.cfg);if(data.users)dbSet(“users”,data.users);if(data.clientes)dbSet(“clientes”,data.clientes);toast(“Importado — recargá”,“ok”);}catch(err){toast(“Error al importar”,“err”);}};
+reader.onload=function(ev){try{var data=JSON.parse(ev.target.result);if(data.prods)dbSet(“prods”,data.prods);if(data.ventas)dbSet(“ventas”,data.ventas);if(data.cfg)dbSet(“cfg”,data.cfg);if(data.users)dbSet(“users”,data.users);if(data.clientes)dbSet(“clientes”,data.clientes);toast(“Importado - recarga”,“ok”);}catch(err){toast(“Error al importar”,“err”);}};
 reader.readAsText(file);e.target.value=””;
 });
 
